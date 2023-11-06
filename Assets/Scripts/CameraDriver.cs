@@ -76,10 +76,11 @@ public class CameraDriver : FollowPlanet
     {
         UIManager.current.globalViewButton.interactable = true;
         UIManager.current.telluricViewButton.interactable = true;
+        Quaternion displacement = Quaternion.Euler(direction.y * 0.1f, direction.x * -0.1f, 0);
         if (planet != null)
         {
             Vector3 paddingVector = new Vector3(xPadding, yPadding, zPadding);
-            paddingVector = Quaternion.Euler(direction.y * 0.1f, direction.x * -0.1f, 0) * paddingVector;
+            paddingVector = displacement * paddingVector;
             xPadding = paddingVector.x;
             yPadding = paddingVector.y;
             zPadding = paddingVector.z;
@@ -87,7 +88,7 @@ public class CameraDriver : FollowPlanet
         else
         {
             Vector3 vectorToTarget = transform.position - orbitingAround;
-            vectorToTarget = Quaternion.Euler(direction.y * 0.1f, direction.x * -0.1f, 0) * vectorToTarget;
+            vectorToTarget = displacement * vectorToTarget;
             transform.position = orbitingAround + vectorToTarget;
         }
     }
